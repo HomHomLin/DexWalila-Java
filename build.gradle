@@ -1,0 +1,52 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "http://192.168.10.230:8081/nexus/content/repositories/releases"
+        }
+        maven {
+            url "http://192.168.10.230:8081/nexus/content/repositories/snapshots"
+        }
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath "com.meiyou.framework.gradle.plugin:my-deploy:1.0.4"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+//        classpath 'com.antfortune.freeline:gradle:0.8.7'
+        classpath 'de.undercouch:gradle-download-task:3.1.2'
+        //大杀器
+        classpath 'com.meiyou.sdk.plugin:dexwalila-compiler:0.0.58-SNAPSHOT'
+//        classpath 'com.meiyou.sdk.plugin:anna-compiler:0.0.92-SNAPSHOT'
+    }
+}
+
+allprojects {
+    repositories {
+        //mavenLocal()
+        maven {
+            url deployUrl
+        }
+        maven {
+            url deployReleaseUrl
+        }
+        maven {
+            url thirdpartyUrl
+        }
+        maven { url "https://dl.bintray.com/thelasterstar/maven/" }
+        mavenCentral()
+        jcenter()
+    }
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+        resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

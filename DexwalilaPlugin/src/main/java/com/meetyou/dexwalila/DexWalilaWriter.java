@@ -1,0 +1,321 @@
+package com.meetyou.dexwalila;
+
+import org.objectweb.asm.AnnotationVisitor;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.FieldVisitor;
+import org.objectweb.asm.Label;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+
+/**
+ * Created by Linhh on 2017/7/24.
+ */
+
+public class DexWalilaWriter implements Opcodes{
+    public static byte[] makeWalila(String walila){
+        ClassWriter cw = new ClassWriter(0);
+        FieldVisitor fv;
+        MethodVisitor mv;
+        AnnotationVisitor av0;
+
+        cw.visit(V1_7, ACC_PUBLIC + ACC_SUPER, "com/meetyou/dex/walila/DexWalila", null, "java/lang/Object", null);
+
+        {
+            fv = cw.visitField(ACC_PUBLIC + ACC_STATIC, "pro", "Ljava/lang/String;", null, null);
+            fv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V", false);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(1, 1);
+            mv.visitEnd();
+        }
+        {
+
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "maintest", "([Ljava/lang/String;)V", null, null);
+            mv.visitCode();
+            Label l0 = new Label();
+            Label l1 = new Label();
+            Label l2 = new Label();
+            mv.visitTryCatchBlock(l0, l1, l2, "java/lang/Exception");
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
+            mv.visitLdcInsn("walila is execute");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "print", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ALOAD, 0);
+            Label l3 = new Label();
+            mv.visitJumpInsn(IFNONNULL, l3);
+            mv.visitInsn(RETURN);
+            mv.visitLabel(l3);
+            mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+            mv.visitTypeInsn(NEW, "java/io/File");
+            mv.visitInsn(DUP);
+            mv.visitLdcInsn("/Users/Linhh/fuckdex.txt");
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/File", "<init>", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "exists", "()Z", false);
+            Label l4 = new Label();
+            mv.visitJumpInsn(IFEQ, l4);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "delete", "()Z", false);
+            mv.visitInsn(POP);
+            mv.visitLabel(l4);
+            mv.visitFrame(Opcodes.F_APPEND,1, new Object[] {"java/io/File"}, 0, null);
+            mv.visitLdcInsn("");
+            mv.visitVarInsn(ASTORE, 2);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ASTORE, 3);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitInsn(ARRAYLENGTH);
+            mv.visitVarInsn(ISTORE, 4);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ISTORE, 5);
+            Label l5 = new Label();
+            mv.visitLabel(l5);
+            mv.visitFrame(Opcodes.F_FULL, 6, new Object[] {"[Ljava/lang/String;", "java/io/File", "java/lang/String", "[Ljava/lang/String;", Opcodes.INTEGER, Opcodes.INTEGER}, 0, new Object[] {});
+            mv.visitVarInsn(ILOAD, 5);
+            mv.visitVarInsn(ILOAD, 4);
+            mv.visitJumpInsn(IF_ICMPGE, l0);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitVarInsn(ILOAD, 5);
+            mv.visitInsn(AALOAD);
+            mv.visitVarInsn(ASTORE, 6);
+            mv.visitTypeInsn(NEW, "java/lang/StringBuilder");
+            mv.visitInsn(DUP);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/StringBuilder", "<init>", "()V", false);
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitLdcInsn("[text]");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitVarInsn(ALOAD, 6);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "append", "(Ljava/lang/String;)Ljava/lang/StringBuilder;", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/StringBuilder", "toString", "()Ljava/lang/String;", false);
+            mv.visitVarInsn(ASTORE, 2);
+            mv.visitIincInsn(5, 1);
+            mv.visitJumpInsn(GOTO, l5);
+            mv.visitLabel(l0);
+            mv.visitFrame(Opcodes.F_CHOP,3, null, 0, null);
+            mv.visitTypeInsn(NEW, "java/io/FileOutputStream");
+            mv.visitInsn(DUP);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/FileOutputStream", "<init>", "(Ljava/io/File;)V", false);
+            mv.visitVarInsn(ASTORE, 3);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitVarInsn(ALOAD, 2);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "getBytes", "()[B", false);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/OutputStream", "write", "([B)V", false);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/OutputStream", "close", "()V", false);
+            mv.visitLabel(l1);
+            Label l6 = new Label();
+            mv.visitJumpInsn(GOTO, l6);
+            mv.visitLabel(l2);
+            mv.visitFrame(Opcodes.F_SAME1, 0, null, 1, new Object[] {"java/lang/Exception"});
+            mv.visitVarInsn(ASTORE, 3);
+            mv.visitVarInsn(ALOAD, 3);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Exception", "printStackTrace", "()V", false);
+            mv.visitLabel(l6);
+            mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(3, 7);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "print", "()V", null, null);
+            mv.visitCode();
+            Label l0 = new Label();
+            Label l1 = new Label();
+            Label l2 = new Label();
+            mv.visitTryCatchBlock(l0, l1, l2, "java/lang/Exception");
+            mv.visitLabel(l0);
+            mv.visitTypeInsn(NEW, "java/io/File");
+            mv.visitInsn(DUP);
+            mv.visitFieldInsn(GETSTATIC, "com/meetyou/dex/walila/DexWalila", "pro", "Ljava/lang/String;");
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/File", "<init>", "(Ljava/lang/String;)V", false);
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "exists", "()Z", false);
+            Label l3 = new Label();
+            mv.visitJumpInsn(IFNE, l3);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/File", "createNewFile", "()Z", false);
+            mv.visitInsn(POP);
+            mv.visitLabel(l3);
+            mv.visitFrame(Opcodes.F_APPEND,1, new Object[] {"java/io/File"}, 0, null);
+            mv.visitTypeInsn(NEW, "java/io/PrintStream");
+            mv.visitInsn(DUP);
+            mv.visitTypeInsn(NEW, "java/io/FileOutputStream");
+            mv.visitInsn(DUP);
+            mv.visitTypeInsn(NEW, "java/io/File");
+            mv.visitInsn(DUP);
+            mv.visitFieldInsn(GETSTATIC, "com/meetyou/dex/walila/DexWalila", "pro", "Ljava/lang/String;");
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/File", "<init>", "(Ljava/lang/String;)V", false);
+            mv.visitInsn(ICONST_1);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/FileOutputStream", "<init>", "(Ljava/io/File;Z)V", false);
+            mv.visitMethodInsn(INVOKESPECIAL, "java/io/PrintStream", "<init>", "(Ljava/io/OutputStream;)V", false);
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitMethodInsn(INVOKESTATIC, "java/lang/System", "setErr", "(Ljava/io/PrintStream;)V", false);
+            mv.visitLabel(l1);
+            Label l4 = new Label();
+            mv.visitJumpInsn(GOTO, l4);
+            mv.visitLabel(l2);
+            mv.visitFrame(Opcodes.F_FULL, 0, new Object[] {}, 1, new Object[] {"java/lang/Exception"});
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/Exception", "printStackTrace", "()V", false);
+            mv.visitLabel(l4);
+            mv.visitFrame(Opcodes.F_SAME, 0, null, 0, null);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(7, 2);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "printArgs", "([Ljava/lang/String;)V", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitInsn(ARRAYLENGTH);
+            mv.visitVarInsn(ISTORE, 2);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ISTORE, 3);
+            Label l0 = new Label();
+            mv.visitLabel(l0);
+            mv.visitFrame(Opcodes.F_APPEND,3, new Object[] {"[Ljava/lang/String;", Opcodes.INTEGER, Opcodes.INTEGER}, 0, null);
+            mv.visitVarInsn(ILOAD, 3);
+            mv.visitVarInsn(ILOAD, 2);
+            Label l1 = new Label();
+            mv.visitJumpInsn(IF_ICMPGE, l1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ILOAD, 3);
+            mv.visitInsn(AALOAD);
+            mv.visitVarInsn(ASTORE, 4);
+            mv.visitFieldInsn(GETSTATIC, "java/lang/System", "err", "Ljava/io/PrintStream;");
+            mv.visitVarInsn(ALOAD, 4);
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/io/PrintStream", "println", "(Ljava/lang/String;)V", false);
+            mv.visitIincInsn(3, 1);
+            mv.visitJumpInsn(GOTO, l0);
+            mv.visitLabel(l1);
+            mv.visitFrame(Opcodes.F_CHOP,3, null, 0, null);
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(2, 5);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "maindex", "([Ljava/lang/String;)[Ljava/lang/String;", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARRAYLENGTH);
+            mv.visitInsn(ICONST_1);
+            mv.visitInsn(IADD);
+            mv.visitTypeInsn(ANEWARRAY, "java/lang/String");
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitInsn(ICONST_0);
+            mv.visitLdcInsn("--disable-annotation-resolution-workaround");
+            mv.visitInsn(AASTORE);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ISTORE, 2);
+            Label l0 = new Label();
+            mv.visitLabel(l0);
+            mv.visitFrame(Opcodes.F_APPEND,2, new Object[] {"[Ljava/lang/String;", Opcodes.INTEGER}, 0, null);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARRAYLENGTH);
+            Label l1 = new Label();
+            mv.visitJumpInsn(IF_ICMPGE, l1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitInsn(ICONST_1);
+            mv.visitInsn(IADD);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitInsn(AALOAD);
+            mv.visitInsn(AASTORE);
+            mv.visitIincInsn(2, 1);
+            mv.visitJumpInsn(GOTO, l0);
+            mv.visitLabel(l1);
+            mv.visitFrame(Opcodes.F_CHOP,1, null, 0, null);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(4, 3);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, "main", "([Ljava/lang/String;)[Ljava/lang/String;", null, null);
+            mv.visitCode();
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ICONST_0);
+            mv.visitInsn(AALOAD);
+            mv.visitLdcInsn("--dex");
+            mv.visitMethodInsn(INVOKEVIRTUAL, "java/lang/String", "equals", "(Ljava/lang/Object;)Z", false);
+            Label l0 = new Label();
+            mv.visitJumpInsn(IFEQ, l0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARRAYLENGTH);
+            mv.visitInsn(ICONST_1);
+            mv.visitInsn(IADD);
+            mv.visitTypeInsn(ANEWARRAY, "java/lang/String");
+            mv.visitVarInsn(ASTORE, 1);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitInsn(ICONST_0);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ICONST_0);
+            mv.visitInsn(AALOAD);
+            mv.visitInsn(AASTORE);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitInsn(ICONST_1);
+            mv.visitLdcInsn("--minimal-main-dex");
+            mv.visitInsn(AASTORE);
+            mv.visitInsn(ICONST_1);
+            mv.visitVarInsn(ISTORE, 2);
+            Label l1 = new Label();
+            mv.visitLabel(l1);
+            mv.visitFrame(Opcodes.F_APPEND,2, new Object[] {"[Ljava/lang/String;", Opcodes.INTEGER}, 0, null);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARRAYLENGTH);
+            Label l2 = new Label();
+            mv.visitJumpInsn(IF_ICMPGE, l2);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitInsn(ICONST_1);
+            mv.visitInsn(IADD);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitVarInsn(ILOAD, 2);
+            mv.visitInsn(AALOAD);
+            mv.visitInsn(AASTORE);
+            mv.visitIincInsn(2, 1);
+            mv.visitJumpInsn(GOTO, l1);
+            mv.visitLabel(l2);
+            mv.visitFrame(Opcodes.F_CHOP,1, null, 0, null);
+            mv.visitVarInsn(ALOAD, 1);
+            mv.visitVarInsn(ASTORE, 0);
+            mv.visitLabel(l0);
+            mv.visitFrame(Opcodes.F_CHOP,1, null, 0, null);
+            mv.visitVarInsn(ALOAD, 0);
+            mv.visitInsn(ARETURN);
+            mv.visitMaxs(4, 3);
+            mv.visitEnd();
+        }
+        {
+            mv = cw.visitMethod(ACC_STATIC, "<clinit>", "()V", null, null);
+            mv.visitCode();
+            mv.visitLdcInsn(walila);
+            mv.visitFieldInsn(PUTSTATIC, "com/meetyou/dex/walila/DexWalila", "pro", "Ljava/lang/String;");
+            mv.visitInsn(RETURN);
+            mv.visitMaxs(1, 0);
+            mv.visitEnd();
+        }
+        cw.visitEnd();
+
+        return cw.toByteArray();
+
+    }
+}
